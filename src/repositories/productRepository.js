@@ -39,15 +39,6 @@ function create(data) {
 
   return newProduct;
 }
-
-export default {
-  findAll,
-  findById,
-  create,
-  update,
-  remove,
-};
-
 function findById(id) {
   const products = readAll();
 
@@ -90,3 +81,12 @@ function remove(id) {
 
   return true;
 }
+
+export default {
+  findAll,
+  findById,
+  create,
+  update,
+  remove,
+};
+
