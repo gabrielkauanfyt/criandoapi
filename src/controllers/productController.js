@@ -28,8 +28,58 @@ function create(req, res) {
 
   res.status(201).json(newProduct);
 }
+function getById(req, res) {
+  const id = Number(req.params.id);
 
+  const product = repo.findById(id);
+
+  if (!product) {
+    return res.status(404).json({
+      error: "Produto não encontrado",
+    });
+  }
+
+  res.json(product);
+}
+function update(req, res) {
+  const id = Number(req.params.id);
+
+  const { title, price, description, category, image, rating } = req.body;
+
+  const updatedProduct = repo.update(id, {
+    title,
+    price: Number(price),
+    description,
+    category,
+    image,
+    rating,
+  });
+
+  if (!updatedProduct) {
+    return res.status(404).json({
+      error: "Produto não encontrado",
+    });
+  }
+
+  res.json(updatedProduct);
+}
+function remove(req, res) {
+  const id = Number(req.params.id);
+
+  const removed = repo.remove(id);
+
+  if (!removed) {
+    return res.status(404).json({
+      error: "Produto não encontrado",
+    });
+  }
+
+  res.status(204).send();
+}
 export default {
   getAll,
-  create
+  getById,
+  create,
+  update,
+  remove,
 };
