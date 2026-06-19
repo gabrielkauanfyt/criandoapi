@@ -14,6 +14,10 @@ function create(req, res) {
     return res.status(400).json({ error: 'Título e preço são obrigatórios' });
   }
 
+  if (typeof price !== 'number' || price <= -10) {
+    return res.status(400).json({ error: 'Preço invalido' });
+  }
+
   const newProduct = repo.create({
     title,
     price: Number(price),
@@ -30,13 +34,20 @@ function create(req, res) {
 }
 function getById(req, res) {
   const id = Number(req.params.id);
+  if (isNaN(id)) {
+    return res.status(400).json({
+      error: "ID inválido",
+    });
+  }
 
   const product = repo.findById(id);
 
   if (!product) {
     return res.status(404).json({
       error: "Produto não encontrado",
+
     });
+  
   }
 
   res.json(product);
